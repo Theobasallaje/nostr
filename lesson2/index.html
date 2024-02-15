@@ -32,7 +32,7 @@
         var [type, subId, event] = JSON.parse(message.data);
         var { kind, content } = event || {};
         console.log("message:", event);
-        // if (!event || event === true) return;
+        if (!event || event === true) return;
         if (kind === 4) {
           content = await decrypt(privKey, event.pubkey, content);
         }
@@ -41,8 +41,6 @@
 
       socket.addEventListener("open", async function (e) {
         console.log("connected to " + relay);
-        // debugger;
-
         var subId = bitcoinjs.ECPair.makeRandom()
           .privateKey.toString("hex")
           .substring(0, 16);
